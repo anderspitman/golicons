@@ -5,9 +5,9 @@
     <link rel="stylesheet" type="text/css" href="/styles.css">
     <meta charset="utf-8"> 
     <style>
-      #icon {
-        width: 64px;
-        height: 64px;
+      .icon {
+        width: 40px;
+        height: 40px;
       }
 
       .goli-live {
@@ -21,8 +21,13 @@
     </style>
   </head>
   <body>
-    <div id='icon' onClick='console.log("Hi there");'></div>
+    <div class='icon goli goli-tick-ms-100'
+      onClick='console.log("Hi there 0");'></div>
+    <div class='icon goli goli-tick-ms-200'
+      onClick='console.log("Hi there 1");'></div>
+    <div class='icon goli goli-tick-ms-300'
+      onClick='console.log("Hi there 2");'></div>
+
     <script src='/golicons.js'></script>
-    <script src='/index.js'></script>
   </body>
 </html>

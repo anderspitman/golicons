@@ -12,16 +12,15 @@
 
   const SVG_NS = 'http://www.w3.org/2000/svg';
 
-  function timeNowSeconds() {
-    return performance.now() / 1000;
-  }
-
   class GOL {
     constructor(el) {
       this._el = el;
+      this._tickDelayMs = 1000;
+
+      this._parseClassOptions();
+
       this._state = glider(); 
       this._newState = glider(); 
-      this._tickDelayMs = 200;
       this._cells = [];
 
       this._numRows = this._state.length;
@@ -30,8 +29,6 @@
       const dim = el.getBoundingClientRect();
       const cellWidth = dim.width / this._numCols;
       const cellHeight = dim.height / this._numRows;
-
-      console.log(dim);
 
       const svg = document.createElementNS(SVG_NS, 'svg');
       svg.style.width = '100%';
@@ -56,16 +53,21 @@
 
       this.render();
     }
+
+    _parseClassOptions() {
+      const classList = this._el.classList;
+
+      for (const klass of classList) {
+        if (klass.startsWith('goli-tick-ms')) {
+          this._tickDelayMs = Number(klass.slice(13));
+        }
+      }
+    }
     
     start() {
       setInterval(() => {
-        //this.printState();
-        //const startTime = timeNowSeconds();
         this.tick();
-        //const endTickTime = timeNowSeconds();
-        //console.log(`Tick time: ${endTickTime - startTime}`);
         requestAnimationFrame(this.render.bind(this));
-        //console.log(`Render time: ${timeNowSeconds() - endTickTime}`);
       }, this._tickDelayMs);
     }
 
@@ -83,9 +85,6 @@
       for (let i = 0; i < this._state.length; i++) {
         for (let j = 0; j < this._state[0].length; j++) {
           const neighbors = this.neighbors(i, j);
-          //this.printState();
-          //console.log(`Neighbors for (${i}, ${j})`);
-          //console.log(neighbors);
 
           let liveCount = 0;
 
@@ -97,7 +96,6 @@
           }
 
           const currentState = this._state[i][j];
-          //console.log("currentState: " + currentState);
           let newState = currentState;
           if (currentState === 1) {
             if (liveCount < 2) {
@@ -120,7 +118,6 @@
             }
           }
 
-          //console.log("Setting to: " + newState);
           this._newState[i][j] = newState;
         }
       }
@@ -274,7 +271,6 @@
   function activate({ domId, domClass }) {
     if (domId) {
       const el = document.getElementById(domId);
-      console.log(el);
       const gol = new GOL(el);
       gol.start();
       return gol;
@@ -282,6 +278,13 @@
     else if (domClass) {
       throw "domClass not implemented yet";
     }
+  }
+
+  const golis = document.getElementsByClassName('goli');
+
+  for (const goli of golis) {
+    const gol = new GOL(goli);
+    gol.start();
   }
 
   return {
