@@ -19,9 +19,9 @@
   class GOL {
     constructor(el) {
       this._el = el;
-      this._state = beacon(); 
-      this._newState = beacon(); 
-      this._tickDelayMs = 500;
+      this._state = glider(); 
+      this._newState = glider(); 
+      this._tickDelayMs = 200;
       this._cells = [];
 
       this._numRows = this._state.length;
@@ -34,6 +34,8 @@
       console.log(dim);
 
       const svg = document.createElementNS(SVG_NS, 'svg');
+      svg.style.width = '100%';
+      svg.style.height = '100%';
       el.appendChild(svg);
       
       for (let i = 0; i < this._state.length; i++) {
@@ -56,16 +58,13 @@
     }
     
     start() {
-      //for (let i = 0; i < 3; i++) {
-      //  this.tick();
-      //}
       setInterval(() => {
         //this.printState();
-        const startTime = timeNowSeconds();
+        //const startTime = timeNowSeconds();
         this.tick();
-        const endTickTime = timeNowSeconds();
+        //const endTickTime = timeNowSeconds();
         //console.log(`Tick time: ${endTickTime - startTime}`);
-        this.render();
+        requestAnimationFrame(this.render.bind(this));
         //console.log(`Render time: ${timeNowSeconds() - endTickTime}`);
       }, this._tickDelayMs);
     }
@@ -88,12 +87,12 @@
           //console.log(`Neighbors for (${i}, ${j})`);
           //console.log(neighbors);
 
-          let aliveCount = 0;
+          let liveCount = 0;
 
           // TODO: this can be generated on the fly in neighbors
           for (const neighbor of neighbors) {
             if (neighbor === 1) {
-              aliveCount++;
+              liveCount++;
             }
           }
 
@@ -101,21 +100,21 @@
           //console.log("currentState: " + currentState);
           let newState = currentState;
           if (currentState === 1) {
-            if (aliveCount < 2) {
+            if (liveCount < 2) {
               // underpopulation
               newState = 0;
             }
-            else if (aliveCount > 3) {
+            else if (liveCount > 3) {
               // overpopulation
               newState = 0;
             }
             else {
-              // stays alive
+              // stays live
               newState = 1;
             }
           }
           else {
-            if (aliveCount === 3) {
+            if (liveCount === 3) {
               // reproduction
               newState = 1;
             }
@@ -210,10 +209,10 @@
 
           if (state === 1) {
             this._cells[i][j].classList.remove('goli-dead');
-            this._cells[i][j].classList.add('goli-alive');
+            this._cells[i][j].classList.add('goli-live');
           }
           else {
-            this._cells[i][j].classList.remove('goli-alive');
+            this._cells[i][j].classList.remove('goli-live');
             this._cells[i][j].classList.add('goli-dead');
           }
         }
@@ -241,7 +240,29 @@
       [ 0, 0, 0, 0, 0, 0 ],
     ];
   }
-  
+
+  function toad() {
+    return [
+      [ 0, 0, 0, 0, 0, 0 ],
+      [ 0, 0, 0, 0, 0, 0 ],
+      [ 0, 0, 1, 1, 1, 0 ],
+      [ 0, 1, 1, 1, 0, 0 ],
+      [ 0, 0, 0, 0, 0, 0 ],
+      [ 0, 0, 0, 0, 0, 0 ],
+    ];
+  }
+
+  function glider() {
+    return [
+      [ 0, 0, 0, 0, 0, 0 ],
+      [ 0, 0, 1, 0, 0, 0 ],
+      [ 0, 0, 0, 1, 0, 0 ],
+      [ 0, 1, 1, 1, 0, 0 ],
+      [ 0, 0, 0, 0, 0, 0 ],
+      [ 0, 0, 0, 0, 0, 0 ],
+    ];
+  }
+
   function copyState(a, b) {
     for (let i = 0; i < a.length; i++) {
       for (let j = 0; j < a[0].length; j++) {
