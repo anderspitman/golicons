@@ -12,15 +12,27 @@
 
   const SVG_NS = 'http://www.w3.org/2000/svg';
 
+  const plugins = {};
+  function registerPlugin(name, func) {
+    const fullName = 'goli-' + name;
+    if (plugins[fullName]) {
+      throw "golicons plugin '" + name + "' already defined";
+    }
+    plugins[fullName] = func;
+    console.log(plugins);
+  }
+
   class GOL {
     constructor(el) {
       this._el = el;
+
       this._tickDelayMs = 1000;
+      this._patternFunc = blinker;
 
       this._parseClassOptions();
 
-      this._state = glider(); 
-      this._newState = glider(); 
+      this._state = this._patternFunc(); 
+      this._newState = this._patternFunc(); 
       this._cells = [];
 
       this._numRows = this._state.length;
@@ -61,7 +73,20 @@
         if (klass.startsWith('goli-tick-ms')) {
           this._tickDelayMs = Number(klass.slice(13));
         }
+        else {
+          // class not recognized; check if there's a plugin for it
+          if (plugins[klass]) {
+            plugins[klass](this);
+          }
+          else if (klass.startsWith('goli-')) {
+            throw "Unrecognized golicons class: " + klass;
+          }
+        }
       }
+    }
+
+    setPatternFunc(func) {
+      this._patternFunc = func;
     }
     
     start() {
@@ -280,6 +305,18 @@
     }
   }
 
+  registerPlugin('glider', (golicon) => {
+    golicon.setPatternFunc(glider);
+  });
+
+  registerPlugin('blinker', (golicon) => {
+    golicon.setPatternFunc(blinker);
+  });
+
+  registerPlugin('toad', (golicon) => {
+    golicon.setPatternFunc(toad);
+  });
+
   const golis = document.getElementsByClassName('goli');
 
   for (const goli of golis) {
@@ -287,7 +324,8 @@
     gol.start();
   }
 
+  
   return {
-    activate,
+    registerPlugin,
   };
 }));
