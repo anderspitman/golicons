@@ -22,6 +22,24 @@
     console.log(plugins);
   }
 
+  function insertDefaultStyles() {
+    const style = document.createElement('style');
+    style.type = 'text/css';
+    console.log(style);
+    console.log(style.styleSheet);
+    let styles = '';
+    
+    styles += '.goli-live { fill: #111; }';
+    styles += '.goli-dead { fill: #eee; }';
+
+    const node = document.createTextNode(styles);
+    style.appendChild(node);
+
+    const head = document.getElementsByTagName('head')[0];
+
+    head.insertBefore(style, head.firstChild);
+  }
+
   class GOL {
     constructor(el) {
       this._el = el;
@@ -317,13 +335,14 @@
     golicon.setPatternFunc(toad);
   });
 
+  insertDefaultStyles();
+
   const golis = document.getElementsByClassName('goli');
 
   for (const goli of golis) {
     const gol = new GOL(goli);
     gol.start();
   }
-
   
   return {
     registerPlugin,
