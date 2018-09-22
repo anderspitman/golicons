@@ -29,8 +29,9 @@
     console.log(style.styleSheet);
     let styles = '';
     
-    styles += '.goli-live { fill: #111; }';
-    styles += '.goli-dead { fill: #eee; }';
+    styles += '.goli { width: 32px; height: 32px; }';
+    styles += '.goli-live { fill: #000; }';
+    styles += '.goli-dead { fill: #fff; stroke: #000; }';
 
     const node = document.createTextNode(styles);
     style.appendChild(node);
