@@ -356,45 +356,37 @@
     }
   }
 
-  function activate({ domId, domClass }) {
-    if (domId) {
-      const el = document.getElementById(domId);
-      const gol = new GOL(el);
+  function start() {
+    const gliderText = `
+      000000
+      001000
+      000100
+      011100
+      000000
+    `;
+    registerPattern('glider', gliderText);
+
+    registerPlugin('blinker', (golicon) => {
+      golicon.setPatternFunc(blinker);
+    });
+
+    registerPlugin('toad', (golicon) => {
+      golicon.setPatternFunc(toad);
+    });
+
+    insertDefaultStyles();
+
+    const golis = document.getElementsByClassName('goli');
+
+    for (const goli of golis) {
+      const gol = new GOL(goli);
       gol.start();
-      return gol;
     }
-    else if (domClass) {
-      throw "domClass not implemented yet";
-    }
-  }
-
-  const gliderText = `
-    000000
-    001000
-    000100
-    011100
-    000000
-  `;
-  registerPattern('glider', gliderText);
-
-  registerPlugin('blinker', (golicon) => {
-    golicon.setPatternFunc(blinker);
-  });
-
-  registerPlugin('toad', (golicon) => {
-    golicon.setPatternFunc(toad);
-  });
-
-  insertDefaultStyles();
-
-  const golis = document.getElementsByClassName('goli');
-
-  for (const goli of golis) {
-    const gol = new GOL(goli);
-    gol.start();
   }
   
   return {
     registerPlugin,
+    registerPattern,
+    start,
   };
 }));
