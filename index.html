@@ -1,31 +1,77 @@
 <!doctype html>
 <html>
   <head>
-    <title>golicons example</title>
+    <title>golicons</title>
     <link rel="stylesheet" type="text/css" href="/styles.css">
+    <link href="/lib/prism.css" rel="stylesheet" />
     <meta charset="utf-8"> 
     <style>
-      .goli{
+
+      body {
+        /*background-color: #eeeeee;*/
+      }
+
+      .heading {
+        font-size: 50px;
+        text-align: center;
+      }
+
+      .content {
+        margin: 0 auto;
+        font-size: 25px;
+        font-family: Courier New, monospace;
+        max-width: 900px;
+        line-height: 1.5;
+        color: #111;
+      }
+
+      .examples {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+      }
+
+      .goli {
         width: 48px;
         height: 48px;
         margin: 20px;
       }
-
-      .goli-dead {
-        stroke: #111;
-      }
     </style>
   </head>
   <body>
-    <div class='goli goli-blinker goli-tick-ms-1000'
-      onClick='console.log("Hi there 0");'></div>
-    <div class='goli goli-glider goli-tick-ms-200'
-      onClick='console.log("Hi there 1");'></div>
-    <div class='goli goli-toad goli-tick-ms-300'
-      onClick='console.log("Hi there 2");'></div>
-    <div class='goli goli-beacon goli-tick-ms-300'
-      onClick='console.log("Hi there 2");'></div>
+    <div class='content'>
+      <h1 class='heading' >GOLicons</h1>
+      <p>
+        <strong>golicons</strong> are SVG icons which are animated with
+        JavaScript to simulate
+        <a target='_blank'
+            href='https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life'>
+          Conway's Game of Life.
+        </a>
+      </p>
+      <div class='examples'>
+        <div class='goli goli-blinker goli-tick-ms-1000'></div>
+        <div class='goli goli-glider goli-tick-ms-200'></div>
+        <div class='goli goli-toad goli-tick-ms-300'></div>
+        <div class='goli goli-beacon goli-tick-ms-300'></div>
+      </div>
 
+      <p>
+        They're intended to be used for loading images and things like that.
+      </p>
+
+      <p>
+        Getting started is a piece of cake.
+      </p>
+
+      <pre><code class="language-css">p { color: red }</code></pre>
+      <pre><code class="language-markup"><!--
+      <html></html>
+      --></code></pre>
+
+    </div>
+
+    <script src='/lib/prism.js'></script>
     <script src='/dist/golicons.min.js'></script>
     <script>
       golicons.start();
