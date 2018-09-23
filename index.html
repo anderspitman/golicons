@@ -2,9 +2,61 @@
 <html>
   <head>
     <title>golicons</title>
-    <link rel="stylesheet" type="text/css" href="/styles.css">
     <link href="/lib/prism.css" rel="stylesheet" />
     <meta charset="utf-8"> 
+    
+    <template id='example-template'>
+      <div><strong>Code:</strong></div>
+      <pre><code class='listing language-markup'></code></pre>
+      <div><strong>Result:</strong></div>
+      <iframe class='iframe' ></iframe>
+    </template>
+
+    <template class='example' id='example-1'><!--<!doctype html>
+<html lang='en'>
+  <head>
+    <meta charset="utf-8"> 
+  </head>
+  <body>
+    <div class='goli goli-glider'></div>
+    <script src='https://cdn.jsdelivr.net/npm/golicons@0.4.0/dist/golicons.min.js'></script>
+    <script>
+      golicons.start();
+    </script>
+  </body>
+</html>--></template>
+
+    <template class='example' id='example-2'><!--<!doctype html>
+<html lang='en'>
+  <head>
+    <meta charset="utf-8"> 
+    <style>
+    </style>
+  </head>
+  <body>
+
+    <div class='goli goli-my-awesome-pattern'></div>
+
+    <script src='https://cdn.jsdelivr.net/npm/golicons@0.4.0/dist/golicons.min.js'></script>
+    <script>
+      const patternStr = `
+        000000
+        011110
+        010010
+        010000
+        010110
+        010010
+        011110
+        000000
+      `;
+
+      golicons.registerPattern('my-awesome-pattern', patternStr);
+
+      golicons.start();
+    </script>
+  </body>
+</html>--></template>
+
     <style>
 
       body {
@@ -18,11 +70,19 @@
 
       .content {
         margin: 0 auto;
-        font-size: 25px;
         font-family: Courier New, monospace;
         max-width: 900px;
-        line-height: 1.5;
         color: #111;
+      }
+
+      .content p {
+        font-size: 20px;
+        line-height: 1.5;
+      }
+
+      iframe {
+        width: 100%;
+        height: 256px;
       }
 
       .examples {
@@ -57,24 +117,52 @@
       </div>
 
       <p>
-        They're intended to be used for loading images and things like that.
+        Getting started is a piece of cake:
       </p>
+
+      <div id='example-1-container'></div>
 
       <p>
-        Getting started is a piece of cake.
+        However, chances are that you'll want to use some of your own patterns:
       </p>
 
-      <pre><code class="language-css">p { color: red }</code></pre>
-      <pre><code class="language-markup"><!--
-      <html></html>
-      --></code></pre>
+      <div id='example-2-container'></div>
 
     </div>
 
-    <script src='/lib/prism.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/golicons@0.4.0/dist/golicons.min.js'></script>
+    <!--
     <script src='/dist/golicons.min.js'></script>
+    -->
     <script>
+
+      // poor man's templating engine. This allows me to use the templates
+      // in <head> as the source for both the syntax highlighted snippets and
+      // the iframe. This was the examples will always be running the code
+      // that is shown.
+      const exampleTemplates = document.getElementsByClassName('example');
+      const template = document.getElementById('example-template');
+      for (const example of exampleTemplates) {
+        const templateClone = document.importNode(template.content, true);
+        const id = example.id;
+        const listing = templateClone.querySelector('.listing');
+        const iframe = templateClone.querySelector('.iframe');
+
+        listing.innerHTML = example.innerHTML;
+        const stripped = example.innerHTML.slice(4, example.innerHTML.length - 3);
+        iframe.srcdoc = stripped;
+
+        const container = document.getElementById(id + '-container');
+        container.appendChild(templateClone);
+      }
+
+      console.log(golicons.version);
       golicons.start();
+
     </script>
+
+    <!-- syntax highlighting -->
+    <script src='/lib/prism.js'></script>
+
   </body>
 </html>
