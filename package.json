@@ -1,0 +1,26 @@
+{
+  "name": "golicons",
+  "version": "0.1.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anderspitman/golicons.git"
+  },
+  "keywords": [
+    "GOL",
+    "Game",
+    "of",
+    "Life",
+    "automaton"
+  ],
+  "author": "Anders Pitman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/anderspitman/golicons/issues"
+  },
+  "homepage": "https://github.com/anderspitman/golicons#readme"
+}
