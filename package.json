@@ -1,6 +1,6 @@
 {
   "name": "golicons",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "",
   "main": "src/index.js",
   "scripts": {
@@ -22,5 +22,9 @@
   "bugs": {
     "url": "https://github.com/anderspitman/golicons/issues"
   },
-  "homepage": "https://github.com/anderspitman/golicons#readme"
+  "homepage": "https://github.com/anderspitman/golicons#readme",
+  "devDependencies": {
+    "webpack": "^4.19.1",
+    "webpack-cli": "^3.1.0"
+  }
 }
