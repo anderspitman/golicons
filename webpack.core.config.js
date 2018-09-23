@@ -1,11 +1,11 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/core.js',
   output: {
     library: 'golicons',
     libraryTarget: 'umd',
     path: path.resolve(__dirname, 'dist'),
-    filename: 'golicons.min.js',
+    filename: 'golicons-core.min.js',
   },
 };
