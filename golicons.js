@@ -12,21 +12,65 @@
 
   const SVG_NS = 'http://www.w3.org/2000/svg';
 
-  const plugins = {};
+  const names = {};
   function registerPlugin(name, func) {
-    const fullName = 'goli-' + name;
-    if (plugins[fullName]) {
-      throw "golicons plugin '" + name + "' already defined";
+    registerName(name, func); 
+  }
+
+  function registerPattern(name, patternText) {
+    const pluginFunc = (golicon) => {
+      const patternFunc = () => {
+        return parsePattern(patternText);
+      };
+      golicon.setPatternFunc(patternFunc);
+    };
+
+    registerPlugin(name, pluginFunc); 
+  }
+
+  function parsePattern(patternText) {
+    const rows = [];
+    for (let line of patternText.split('\n')) {
+
+      line = line.trim();
+
+      if (line === '') {
+        continue;
+      }
+
+      const row = [];
+      rows.push(row);
+      
+      for (const char of line) {
+        let cell;
+        if (char === '0') {
+          cell = 0;
+        }
+        else if (char === '1') {
+          cell = 1;
+        }
+        else {
+          throw "Error parsing pattern char: " + char;
+        }
+
+        row.push(cell);
+      }
     }
-    plugins[fullName] = func;
-    console.log(plugins);
+
+    return rows;
+  }
+
+  function registerName(name, value) {
+    const fullName = 'goli-' + name;
+    if (names[fullName]) {
+      throw "golicons name '" + name + "' already in use";
+    }
+    names[fullName] = value;
   }
 
   function insertDefaultStyles() {
     const style = document.createElement('style');
     style.type = 'text/css';
-    console.log(style);
-    console.log(style.styleSheet);
     let styles = '';
     
     styles += '.goli { width: 32px; height: 32px; }';
@@ -94,8 +138,8 @@
         }
         else {
           // class not recognized; check if there's a plugin for it
-          if (plugins[klass]) {
-            plugins[klass](this);
+          if (names[klass]) {
+            names[klass](this);
           }
           else if (klass.startsWith('goli-')) {
             throw "Unrecognized golicons class: " + klass;
@@ -324,9 +368,14 @@
     }
   }
 
-  registerPlugin('glider', (golicon) => {
-    golicon.setPatternFunc(glider);
-  });
+  const gliderText = `
+    000000
+    001000
+    000100
+    011100
+    000000
+  `;
+  registerPattern('glider', gliderText);
 
   registerPlugin('blinker', (golicon) => {
     golicon.setPatternFunc(blinker);
