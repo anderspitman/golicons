@@ -30,7 +30,7 @@
   </head>
   <body>
     <div class='goli goli-glider'></div>
-    <script src='https://cdn.jsdelivr.net/npm/golicons@0.5.0/dist/golicons.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/golicons@0.6.0/dist/golicons.min.js'></script>
     <script>
       golicons.start();
     </script>
@@ -65,7 +65,7 @@
 
     <div class='goli goli-glider goli-start-delay-ms-500 goli-tick-ms-250'></div>
 
-    <script src='https://cdn.jsdelivr.net/npm/golicons@0.5.0/dist/golicons.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/golicons@0.6.0/dist/golicons.min.js'></script>
     <script>
       golicons.start();
     </script>
@@ -87,17 +87,17 @@
 
     <div class='goli goli-my-awesome-tumbler goli-tick-ms-200'></div>
 
-    <script src='https://cdn.jsdelivr.net/npm/golicons@0.5.0/dist/golicons.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/golicons@0.6.0/dist/golicons.min.js'></script>
     <script>
       const patternStr = `
-        00000000000
-        00100000100
-        01010001010
-        01001010010
-        00010001000
-        00011011000
-        00000000000
-        00000000000
+        ...........
+        ..O.....O..
+        .O.O...O.O.
+        .O..O.O..O.
+        ...O...O...
+        ...OO.OO...
+        ...........
+        ...........
       `;
 
       golicons.registerPattern('my-awesome-tumbler', patternStr);
@@ -325,13 +325,15 @@
       <div class='api-classname'>goli-live</div>
       <p>
         This is used to select the SVG elements used to represent cells that
-        are alive.
+        are alive. These are currently implement as SVG rect elements, but
+        no assumptions should be made about this moving forward.
       </p>
 
       <div class='api-classname'>goli-dead</div>
       <p>
         This is used to select the SVG elements used to represent cells that
-        are dead.
+        are dead. These are currently implement as SVG rect elements, but
+        no assumptions should be made about this moving forward.
       </p>
 
       <h2 id='api-settings-classnames'>Settings Class Names</h2>
@@ -379,14 +381,14 @@
       <div class='api-classname'>golicons.registerPattern(name, patternString)</div>
       <p>
         This function is for registering new patterns. The pattern string is
-        a series of newline-separated rows where "0" represents a dead cell
-        and "1" represents a live one.
+        a series of newline-separated rows where "." represents a dead cell
+        and "O" (capital "o") represents a live one.
       </p>
 
     </div>
 
     <!--
-    <script src='https://cdn.jsdelivr.net/npm/golicons@0.5.0/dist/golicons.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/golicons@0.6.0/dist/golicons.min.js'></script>
     -->
     <script src='/dist/golicons.min.js'></script>
     <script>
@@ -412,14 +414,14 @@
       }
 
       const goliconsPattern = `
-        0000000000000000000000000000000000000000
-        0111101111010000111011110111101001011110
-        0100101001010000010010010100101101010000
-        0100001001010000010010000100101101011100
-        0101101001010000010010000100101011000010
-        0100101001010000010010010100101011000010
-        0111101111011110111011110111101001011110
-        0000000000000000000000000000000000000000
+        ........................................
+        .OOOO.OOOO.O....OOO.OOOO.OOOO.O..O.OOOO.
+        .O..O.O..O.O.....O..O..O.O..O.OO.O.O....
+        .O....O..O.O.....O..O....O..O.OO.O.OOO..
+        .O.OO.O..O.O.....O..O....O..O.O.OO....O.
+        .O..O.O..O.O.....O..O..O.O..O.O.OO....O.
+        .OOOO.OOOO.OOOO.OOO.OOOO.OOOO.O..O.OOOO.
+        ........................................
       `;
 
       const numRows = 8;
@@ -434,7 +436,6 @@
 
       golicons.registerPattern('goliconator', goliconsPattern);
 
-      console.log(golicons.version);
       golicons.start();
 
     </script>

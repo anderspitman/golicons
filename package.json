@@ -1,6 +1,6 @@
 {
   "name": "golicons",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "",
   "main": "src/index.js",
   "scripts": {
@@ -12,9 +12,9 @@
   },
   "keywords": [
     "GOL",
-    "Game",
-    "of",
+    "Game of Life",
     "Life",
+    "Conway",
     "automaton"
   ],
   "author": "Anders Pitman",

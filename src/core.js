@@ -43,10 +43,10 @@ function parsePattern(patternText) {
     
     for (const char of line) {
       let cell;
-      if (char === '0') {
+      if (char === '.') {
         cell = 0;
       }
-      else if (char === '1') {
+      else if (char === 'O') {
         cell = 1;
       }
       else {
