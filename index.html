@@ -31,26 +31,65 @@
   <head>
     <meta charset="utf-8"> 
     <style>
+      .goli {
+        width: 64px;
+        height: 64px;
+        clip-path: circle(40px at center);
+      }
+
+      .goli-live {
+        fill: SteelBlue;
+        stroke: SteelBlue;
+        transition-duration: 0.25s;
+      }
+
+      .goli-dead {
+        fill: Tomato;
+        stroke: Tomato;
+        transition-duration: 0.25s;
+      }
     </style>
   </head>
   <body>
 
-    <div class='goli goli-my-awesome-pattern'></div>
+    <div class='goli goli-glider goli-start-delay-ms-500 goli-tick-ms-250'></div>
+
+    <script src='https://cdn.jsdelivr.net/npm/golicons@0.5.0/dist/golicons.min.js'></script>
+    <script>
+      golicons.start();
+    </script>
+  </body>
+</html>--></template>
+
+    <template class='example' id='example-3'><!--<!doctype html>
+<html lang='en'>
+  <head>
+    <meta charset="utf-8"> 
+    <style>
+      .goli {
+        width: 128px;
+        height: 93px;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class='goli goli-my-awesome-tumbler goli-tick-ms-200'></div>
 
     <script src='https://cdn.jsdelivr.net/npm/golicons@0.5.0/dist/golicons.min.js'></script>
     <script>
       const patternStr = `
-        000000
-        011110
-        010010
-        010000
-        010110
-        010010
-        011110
-        000000
+        00000000000
+        00100000100
+        01010001010
+        01001010010
+        00010001000
+        00011011000
+        00000000000
+        00000000000
       `;
 
-      golicons.registerPattern('my-awesome-pattern', patternStr);
+      golicons.registerPattern('my-awesome-tumbler', patternStr);
 
       golicons.start();
     </script>
@@ -129,6 +168,7 @@
         stroke: #2d2d2d;
       }
 
+
       #top-example-3 .goli-live {
         fill: #62c2c2;
         stroke: #62c2c2;
@@ -177,17 +217,39 @@
         <div id='top-example-4' class='goli goli-beacon goli-tick-ms-500'></div>
       </div>
 
+      <ul>
+        <li><a href='/#quickstart'>Quickstart</a></li>
+        <li><a href='/#other-examples'>Other examples</a></li>
+      </ul>
+
+      <h1 id='quickstart'>Quickstart</h1>
+
       <p>
         Getting started is a piece of cake:
       </p>
 
       <div id='example-1-container'></div>
 
+      <h1 id='other-examples'>Other examples</h1>
+
       <p>
-        However, chances are that you'll want to use some of your own patterns:
+        It's working, but the result is rather ugly and boring. You can style
+        the icons using standard SVG CSS. There are also options that can be
+        configured using CSS classes on the elements. All of these class names
+        (listed below) are considered part of golicon's public API and can be
+        expected to remain stable for each major version. Let's try to add a
+        little CSS and configure a couple other options to make it more
+        exciting:
       </p>
 
       <div id='example-2-container'></div>
+
+      <p>
+        That's a bit better. Chances are that you'll want to use some of your
+        own patterns:
+      </p>
+
+      <div id='example-3-container'></div>
 
     </div>
 
