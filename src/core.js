@@ -95,6 +95,7 @@ class GOL {
 
     this._state = this._patternFunc(); 
     this._newState = this._patternFunc(); 
+    this._prevState = this._patternFunc();
     this._cells = [];
 
     this._numRows = this._state.length;
@@ -125,7 +126,7 @@ class GOL {
       }
     }
 
-    this.render();
+    this.initRender();
   }
 
   _parseClassOptions() {
@@ -134,6 +135,9 @@ class GOL {
     for (const klass of classList) {
       if (klass.startsWith('goli-tick-ms')) {
         this._tickDelayMs = Number(klass.slice(13));
+      }
+      else if (klass.startsWith('goli-start-delay-ms')) {
+        this._startDelayMs = Number(klass.slice(20));
       }
       else {
         // class not recognized; check if there's a plugin for it
@@ -152,10 +156,20 @@ class GOL {
   }
   
   start() {
-    setInterval(() => {
-      this.tick();
-      requestAnimationFrame(this.render.bind(this));
-    }, this._tickDelayMs);
+    const go = () => {
+      setInterval(() => {
+        this.tick();
+        //requestAnimationFrame(this.render.bind(this));
+        this.render();
+      }, this._tickDelayMs);
+    };
+
+    if (!this._startDelayMs) {
+      go();
+    }
+    else {
+      setTimeout(go, this._startDelayMs);
+    }
   }
 
   printState() {
@@ -167,7 +181,10 @@ class GOL {
   }
 
   tick() {
+    //const startTime = timeNowSeconds();
+
     copyState(this._state, this._newState);
+    copyState(this._state, this._prevState);
 
     for (let i = 0; i < this._state.length; i++) {
       for (let j = 0; j < this._state[0].length; j++) {
@@ -210,6 +227,8 @@ class GOL {
     }
 
     copyState(this._newState, this._state);
+
+    //console.log("Tick time: " + (timeNowSeconds() - startTime));
   }
 
   neighbors(i, j) {
@@ -286,20 +305,37 @@ class GOL {
     return this._state[this.wrapBottom(i)][this.wrapRight(j)];
   }
 
-  render() {
+  // don't check if value changed on first render
+  initRender() {
     for (let i = 0; i < this._numRows; i++) {
       for (let j = 0; j < this._numCols; j++) {
-        const state = this._state[i][j];
+          this.renderCell(i, j, this._state[i][j]);
+      }
+    }
+  }
 
-        if (state === 1) {
-          this._cells[i][j].classList.remove('goli-dead');
-          this._cells[i][j].classList.add('goli-live');
-        }
-        else {
-          this._cells[i][j].classList.remove('goli-live');
-          this._cells[i][j].classList.add('goli-dead');
+  render() {
+    //const startTime = timeNowSeconds();
+
+    for (let i = 0; i < this._numRows; i++) {
+      for (let j = 0; j < this._numCols; j++) {
+        if (this._state[i][j] !== this._prevState[i][j]) {
+          this.renderCell(i, j, this._state[i][j]);
         }
       }
+    }
+
+    //console.log("Render time: " + (timeNowSeconds() - startTime));
+  }
+
+  renderCell(i, j, state) {
+    if (state === 1) {
+      this._cells[i][j].classList.remove('goli-dead');
+      this._cells[i][j].classList.add('goli-live');
+    }
+    else {
+      this._cells[i][j].classList.remove('goli-live');
+      this._cells[i][j].classList.add('goli-dead');
     }
   }
 }
@@ -310,4 +346,8 @@ function copyState(a, b) {
       b[i][j] = a[i][j];
     }
   }
+}
+
+function timeNowSeconds() {
+  return performance.now() / 1000;
 }
