@@ -14,6 +14,7 @@
     <title>golicons</title>
     <link href="/lib/prism.css" rel="stylesheet" />
     <meta charset="utf-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <template id='example-template'>
       <div><strong>Code:</strong></div>
@@ -117,6 +118,31 @@
         text-align: center;
       }
 
+      #table-of-contents {
+        margin-top: 20px;
+        font-size: 30px;
+        font-weight: bold;
+      }
+
+      #table-of-contents ul {
+        margin-top: 0px;
+      }
+
+      .list-2nd-level {
+        font-size: 20px;
+      }
+
+      /*
+      #table-of-contents a {
+        color: #111;
+      }
+      */
+
+      .table-of-contents__header {
+        font-size: 40px;
+        font-weight: bold;
+      }
+
       .content {
         margin: 0 auto;
         font-family: Courier New, monospace;
@@ -125,7 +151,7 @@
       }
 
       .content p {
-        font-size: 20px;
+        font-size: 18px;
         line-height: 1.5;
       }
 
@@ -157,7 +183,7 @@
       .examples .goli {
         width: 48px;
         height: 48px;
-        margin: 20px;
+        margin: 10px;
       }
 
       #top-example-1 .goli-live {
@@ -196,6 +222,11 @@
         fill: #da7376;
         stroke: #da7376;
       }
+
+      .api-classname {
+        font-size: 20px;
+        font-weight: bold;
+      }
     </style>
   </head>
   <body>
@@ -227,10 +258,21 @@
         <div id='top-example-4' class='goli goli-beacon goli-tick-ms-500'></div>
       </div>
 
-      <ul>
-        <li><a href='/#quickstart'>Quickstart</a></li>
-        <li><a href='/#other-examples'>Other examples</a></li>
-      </ul>
+      <div id='table-of-contents'>
+        <div class='table-of-contents__header'>Table of Contents</div>
+        <ul>
+          <li><a href='/#quickstart'>Quickstart</a></li>
+          <li><a href='/#other-examples'>Other examples</a></li>
+          <li>
+            <a href='/#api'>API</a>
+            <ul class='list-2nd-level'>
+              <li><a href='/#api-style-classnames'>Styling Class Names</a></li>
+              <li><a href='/#api-settings-classnames'>Settings Class Names</a></li>
+              <li><a href='/#api-javascript'>JavaScript</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
 
       <h1 id='quickstart'>Quickstart</h1>
 
@@ -255,11 +297,91 @@
       <div id='example-2-container'></div>
 
       <p>
-        That's a bit better. Chances are that you'll want to use some of your
-        own patterns:
+        That's a bit better. You can play with a CodePen of this example
+        <a href='https://codepen.io/anon/pen/mGgZXO' target='_blank'>here.</a>
+        Chances are that you'll also want to use some of your own patterns
+      </p>
+      <div id='example-3-container'></div> 
+
+      <h1 id='api'>API</h1>
+
+      <p>
+        golicons is designed to required as little JavaScript as possible.
+        This is done both to keep things as declarative as possible, and to
+        hopefully make it more approachable to designers. To that end, most of
+        the options can be accessed by setting CSS class names on your
+        golicons. All of the classes begin with 'goli-' to help avoid
+        collisions.
       </p>
 
-      <div id='example-3-container'></div>
+      <h2 id='api-style-classnames'>Style Class Names</h2>
+
+      <p>
+        The style class names are used to change the visual representation of
+        the golicons. You can standard CSS selectors on these classes to
+        affect things.
+      </p>
+
+      <div class='api-classname'>goli-live</div>
+      <p>
+        This is used to select the SVG elements used to represent cells that
+        are alive.
+      </p>
+
+      <div class='api-classname'>goli-dead</div>
+      <p>
+        This is used to select the SVG elements used to represent cells that
+        are dead.
+      </p>
+
+      <h2 id='api-settings-classnames'>Settings Class Names</h2>
+      <p>
+        Settings class names are used to configure how the golicons JavaScript
+        code will process the golicon.
+      </p>
+
+      <div class='api-classname'>goli</div>
+      <p>
+        This has two primary purposes. The first is to indicate to the
+        golicons JavaScript code that this element should be processed as a
+        golicon. Therefore everyone golicon needs to have this class. The
+        second is to serve as a selector for setting HTML CSS rules such as
+        width and height on your golicons.
+      </p>
+
+      <div class='api-classname'>goli-tick-ms-&lt;Number&gt;</div>
+      <p>
+        This sets the tick period in milliseconds for the golicons. For
+        example, the value "goli-tick-ms-1000" will cause the golicon to tick
+        (proceed to the next frame).  once per second, while a value of
+        "goli-tick-ms-50" will cause it to tick every 50 milliseconds.
+      </p>
+
+      <div class='api-classname'>goli-start-delay-ms-&lt;Number&gt;</div>
+      <p>
+        This sets how long in milliseconds the simulation should wait before
+        starting.
+      </p>
+
+      <h2 id='api-javascript'>JavaScript</h2>
+      <p>
+        The JS API is minimal by design. However, at the very least you need
+        to use it to kick things off.
+      </p>
+
+      <div class='api-classname'>golicons.start()</div>
+      <p>
+        This function kicks everything off. It runs querySelector on the page
+        and grabs an elements that have the "goli" class and processes them
+        as golicons.
+      </p>
+
+      <div class='api-classname'>golicons.registerPattern(name, patternString)</div>
+      <p>
+        This function is for registering new patterns. The pattern string is
+        a series of newline-separated rows where "0" represents a dead cell
+        and "1" represents a live one.
+      </p>
 
     </div>
 
