@@ -1,4 +1,4 @@
-[golicons](https://golicons.com/) are SVG icons which are animated with JavaScript to simulate [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life). The code is [open source (MIT)](LICENSE) and available on GitHub.
+golicons are SVG icons which are animated with JavaScript to simulate [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life). Full documentation (with live examples) is available [on the website](https://golicons.com/).
 
 ## Quickstart
 
